@@ -1,0 +1,43 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link, NavLink } from 'react-router-dom';
+
+const EventList = ({ events }) => { //配列のjsonデータeventsをプロップすとして受け取る
+  const renderEvents = (eventArray) => { //引数に渡ってきた配列データをソート
+    eventArray.sort((a, b) => new Date(b.event_date) - new Date(a.event_date));
+
+    return eventArray.map((event) => ( //ソート後にリストタグで描画
+    <li key={event.id}>
+    <NavLink to={`/events/${event.id}`}>
+      {event.event_date}
+      {' - '}
+      {event.event_type}
+    </NavLink>
+  </li>
+    ));
+  };
+
+  return (
+    <section className="eventList">
+      <h2>
+        Events
+        <Link to="/events/new">New Event</Link>
+      </h2>
+      <ul>{renderEvents(events)}</ul>
+    </section>
+  );
+};
+
+EventList.propTypes = {
+  events: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    event_type: PropTypes.string,
+    event_date: PropTypes.string,
+    title: PropTypes.string,
+    speaker: PropTypes.string,
+    host: PropTypes.string,
+    published: PropTypes.bool,
+  })).isRequired,
+};
+
+export default EventList;

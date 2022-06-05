@@ -6,6 +6,8 @@
 # Ensure the MySQL gem is defined in your Gemfile
 #   gem "mysql2"
 #
+# username: <%= Rails.application.credentials[:db_user] %>
+# password: <%= Rails.application.credentials[:db_password] %>
 # And be sure to use new-style password hashing:
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
@@ -13,8 +15,8 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: koutaro130205
-  password: Koutaro0205
+  username: <%= Rails.application.credentials[:db_user] %>
+  password: <%= Rails.application.credentials[:db_password] %>
   host: localhost
 
 development:
